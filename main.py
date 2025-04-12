@@ -100,5 +100,25 @@ def del_tag():
 
 ui.del_teg.clicked.connect(del_tag)
 
+def search_tag():
+    if ui.search_btn.text() == "шукати нотатку по тегу":
+        tag = ui.tag_input.text()
+        filtered_notes = []
+        for note_name, note in NOTES.items():
+            if tag in note["теги"]:
+                filtered_notes.append(note_name)
+
+        ui.notes_list.clear()
+        ui.notes_list.addItems(filtered_notes)
+        ui.search_btn.setText("скинути пошук")
+    elif ui.search_btn.text() == "скинути пошук":
+        ui.tag_input.clear()
+        ui.notes_list.clear()
+        ui.notes_list.addItems(NOTES)
+
+        ui.search_btn.setText("шукати нотатку по тегу")
+
+ui.search_btn.clicked.connect(search_tag)
+
 win.show()
 app.exec()
